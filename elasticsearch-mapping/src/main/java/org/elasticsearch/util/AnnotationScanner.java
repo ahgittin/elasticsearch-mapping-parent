@@ -9,6 +9,7 @@ import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.mapping.MappingBuilder;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 /**
@@ -22,6 +23,12 @@ public final class AnnotationScanner {
 	/** Utility classes should have private constructor. */
 	private AnnotationScanner() {}
 
+    private static ResourceLoader resourceLoader;
+
+    public static void setResourceLoader(ResourceLoader resourceLoader) {
+        AnnotationScanner.resourceLoader = resourceLoader;
+    }
+        
 	/**
 	 * Scan a package to find classes that have the given annotation.
 	 * 
@@ -30,7 +37,10 @@ public final class AnnotationScanner {
 	 * @return A set of classes that have the annotation.
 	 */
 	public static Set<Class<?>> scan(String packageRoot, Class<? extends Annotation> anno) {
-		ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
+        ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
+        if (resourceLoader!=null) {
+            scanner.setResourceLoader(resourceLoader);
+        }
 
 		AnnotationTypeFilter filter = new AnnotationTypeFilter(anno);
 		scanner.addIncludeFilter(filter);

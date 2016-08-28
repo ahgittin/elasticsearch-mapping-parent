@@ -8,6 +8,7 @@
 
     <artifactId>elasticsearch-mapping</artifactId>
     <name>Elastic search mapping.</name>
+    <version>1.4.0.cloudsoft</version>
     <description>Object mapping for elastic search.</description>
 
     <dependencies>
@@ -26,7 +27,7 @@
         <dependency>
             <groupId>fr.lucboutier.elasticsearch</groupId>
             <artifactId>elasticsearch-annotations</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
